@@ -1,10 +1,16 @@
-import AuthScreen from "@/features/auth/components/AuthScreen";
+import { Button } from "@/components/ui/button";
+import { LoginLink, RegisterLink } from "@kinde-oss/kinde-auth-nextjs/components";
 
 export default function Home() {
 
   return (
-    <main className="h-screen flex items-center justify-center bg-[#5C3B58] text-white">
-      <AuthScreen />
+    <main>
+      <Button asChild>
+        <LoginLink>Login</LoginLink>
+      </Button>
+      <Button asChild>
+        <RegisterLink>Sign UP</RegisterLink>
+      </Button>
     </main>
   );
 }
