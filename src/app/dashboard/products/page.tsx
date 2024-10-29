@@ -1,3 +1,4 @@
+import prisma from "@/app/lib/db";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -22,6 +23,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import {
   DeleteIcon,
   Edit2,
@@ -29,10 +31,21 @@ import {
   PlusCircle,
   UserIcon,
 } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
-export default function ProductsPage() {
+async function getData() {
+    const data = await prisma.product.findMany({
+        orderBy: {
+            createAt: 'desc',
+        }
+    });
+    return data;
+ }
+
+export default async function ProductsPage() {
+    const data = await getData();
   return (
     <>
       <div className="flex items-center justify-end">
@@ -62,15 +75,23 @@ export default function ProductsPage() {
                 <TableHead className="text-end">Actions</TableHead>
               </TableRow>
             </TableHeader>
-            <TableBody>
-              <TableRow>
+            <TableBody className="cursor-pointer">
+              {
+                data?.map((item)=> (
+                    <TableRow key={item?.id}>
                 <TableCell>
-                  <UserIcon className="size-10" />
+                  <Image
+                  alt={item?.name}
+                  src={item?.images[0]}
+                  width={64}
+                  height={64}
+                  className="rounded-md object-cover h-16 w-16"
+                  />
                 </TableCell>
-                <TableCell>Nike Air</TableCell>
-                <TableCell>Active</TableCell>
-                <TableCell>$299.00</TableCell>
-                <TableCell>2024-06-16</TableCell>
+                <TableCell>{item?.name}</TableCell>
+                <TableCell>{item?.status}</TableCell>
+                <TableCell>${item?.price}</TableCell>
+                <TableCell>{new Intl.DateTimeFormat('en-US').format(item?.createAt)}</TableCell>
                 <TableCell className="text-end">
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
@@ -81,18 +102,22 @@ export default function ProductsPage() {
                     <DropdownMenuContent align="end">
                       <DropdownMenuLabel>Actions</DropdownMenuLabel>
                       <DropdownMenuSeparator />
-                      <DropdownMenuItem className="cursor-pointer">
+                      <DropdownMenuItem className="cursor-pointer" asChild>
+                        <Link href={`/dashboard/products/${item?.id}`}>
                         <Edit2 className="size-2" />
-                        <span>Edit</span>
+                        <span>Edit</span></Link>
                       </DropdownMenuItem>
-                      <DropdownMenuItem className="cursor-pointer text-red-500 hover:bg-red-600 hover:text-white">
+                      <DropdownMenuItem className="cursor-pointer text-red-500 hover:bg-red-600 hover:text-white" asChild>
+                        <Link href={`/dashboard/products/${item?.id}`}>
                         <DeleteIcon className="size-3" />
-                        <span>Delete</span>
+                        <span>Delete</span></Link>
                       </DropdownMenuItem>
                     </DropdownMenuContent>
                   </DropdownMenu>
                 </TableCell>
               </TableRow>
+                ))
+              }
             </TableBody>
           </Table>
         </CardContent>

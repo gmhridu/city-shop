@@ -2,10 +2,11 @@ import React from "react";
 import DashboardNavigation from "../_components/dashboard/DashboardNavigation";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
-import { CircleUser, MenuIcon } from "lucide-react";
+import { CircleUser, LogOut, MenuIcon, Settings } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
@@ -24,21 +25,22 @@ import {
 
 import { redirect } from "next/navigation";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-
+import Image from "next/image";
 type DashboardLayoutProps = {
   children: React.ReactNode;
 };
+
+
 export default async function DashboardLayout({
   children,
 }: DashboardLayoutProps) {
   const { getUser } = getKindeServerSession();
   const user = await getUser();
 
-  if (!user) {
-    return redirect("/");
-  }
+
+
   return (
-    <div className="flex flex-col mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="flex flex-col mx-auto  px-4 sm:px-6 lg:px-8">
       <header className="sticky border-b h-16 top-0 flex items-center justify-between gap-4 bg-white">
         <nav className="hidden font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6">
           <DashboardNavigation />
@@ -61,7 +63,6 @@ export default async function DashboardLayout({
             }
           </SheetContent>
         </Sheet>
-
         <TooltipProvider>
           <Tooltip>
             <DropdownMenu>
@@ -93,13 +94,27 @@ export default async function DashboardLayout({
                   {user?.given_name} {user?.family_name}
                 </p>
               </TooltipContent>
-              <DropdownMenuContent align="end">
-                <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem className="cursor-pointer">
-                  <LogoutLink>Logout</LogoutLink>
+              <DropdownMenuContent align='end' className='w-64' forceMount>
+              <DropdownMenuLabel className='inline-flex flex-col'>
+                {user?.given_name} {user?.family_name}
+              <span className='text-sm text-muted-foreground font-medium'>
+                {user?.email}
+              </span>
+              </DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuGroup>
+                <DropdownMenuItem className='cursor-pointer'>
+                  <Settings/>
+                  Account Settings
                 </DropdownMenuItem>
-              </DropdownMenuContent>
+                <DropdownMenuItem className='cursor-pointer' asChild>
+                  <LogoutLink>
+                  <LogOut/>
+                  Logout
+                  </LogoutLink>
+                </DropdownMenuItem>
+              </DropdownMenuGroup>
+            </DropdownMenuContent>
             </DropdownMenu>
           </Tooltip>
         </TooltipProvider>
