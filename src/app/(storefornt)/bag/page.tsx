@@ -12,10 +12,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import React from 'react';
-import { unstable_noStore as noStore } from "next/cache";
 
 export default async function ShoppingCartBag() {
-  noStore();
   const {getUser} = getKindeServerSession();
   const user = await getUser();
 
