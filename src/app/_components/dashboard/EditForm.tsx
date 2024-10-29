@@ -28,7 +28,7 @@ interface editorFormProps {
     status: $Enums.ProductStatus;
     price: number;
     images: string[];
-    category: $Enums.Category;
+    category: $Enums.Categorys;
     isFeatured: boolean;
     createdAt?: Date;
   }
