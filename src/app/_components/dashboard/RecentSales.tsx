@@ -3,6 +3,7 @@ import prisma from '@/app/lib/db';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import React from 'react'
+import { unstable_noStore as noStore } from "next/cache";
 
 async function getData() {
   const data = await prisma.order.findMany({
@@ -28,6 +29,7 @@ async function getData() {
 }
 
 export default async function RecentSales() {
+  noStore();
   const data = await getData();
   return (
     <Card>

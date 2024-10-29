@@ -1,7 +1,7 @@
 import prisma from '@/app/lib/db'
 import React, { Suspense } from 'react'
 import ProductCard, { LoadingProductCard } from './ProductCard';
-
+import { unstable_noStore as noStore } from "next/cache";
 async function getData(){
   const data = await prisma.product.findMany({
     where: {
@@ -23,6 +23,7 @@ async function getData(){
   return data;
 }
 export default function FeatureProducts() {
+  noStore();
   return (
     <>
     <div className='my-5'>

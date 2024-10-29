@@ -7,13 +7,15 @@ import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
 import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server'
-import { ShoppingBag, Trash } from 'lucide-react';
+import { ShoppingBag} from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
-import React from 'react'
+import React from 'react';
+import { unstable_noStore as noStore } from "next/cache";
 
 export default async function ShoppingCartBag() {
+  noStore();
   const {getUser} = getKindeServerSession();
   const user = await getUser();
 

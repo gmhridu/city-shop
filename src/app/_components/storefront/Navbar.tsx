@@ -10,6 +10,7 @@ import NavbarMobile from './NavbarMobile'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { redis } from '@/app/lib/redis'
 import { Cart } from '@/app/lib/interfaces'
+import { unstable_noStore as noStore } from "next/cache";
 
  const navbarLinks = [
   {
@@ -35,6 +36,7 @@ import { Cart } from '@/app/lib/interfaces'
 ]
 
 export default async function Navbar() {
+  noStore();
   const {getUser} = getKindeServerSession();
   const user = await getUser();
 

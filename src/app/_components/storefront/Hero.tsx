@@ -3,6 +3,7 @@ import prisma from '@/app/lib/db';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel'
 import Image from 'next/image';
 import React from 'react'
+import { unstable_noStore as noStore } from "next/cache";
 
 const getData = async () => {
   const data = await prisma.banner.findMany({
@@ -14,6 +15,7 @@ const getData = async () => {
 }
 
 export default async function Hero() {
+  noStore();
   const banners = await getData();
   const isGif = (url: string) => url.toLowerCase().endsWith('.gif');
   return (

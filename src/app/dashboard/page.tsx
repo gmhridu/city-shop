@@ -6,13 +6,12 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
-import { DollarSign, PartyPopper, ShoppingBag, User2 } from "lucide-react";
 import React from "react";
 import DashboardStats from "../_components/dashboard/DashboardStats";
 import RecentSales from "../_components/dashboard/RecentSales";
 import Chart from "../_components/dashboard/Chart";
 import prisma from "../lib/db";
+import { unstable_noStore as noStore } from "next/cache";
 
 async function getData () {
   const now  = new Date();
@@ -41,6 +40,7 @@ async function getData () {
 }
 
 export default async function Dashboard() {
+  noStore();
   const data = await getData();
   return (
     <>
