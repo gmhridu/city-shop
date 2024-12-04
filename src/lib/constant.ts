@@ -1,1 +1,0 @@
-export const emails = 'hasanhridoymahabub9@gmail.com' || 'tahmeedhasan2015@gmail.com'
