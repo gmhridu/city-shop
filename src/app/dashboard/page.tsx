@@ -7,11 +7,11 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import React from "react";
-import DashboardStats from "../_components/dashboard/DashboardStats";
 import RecentSales from "../_components/dashboard/RecentSales";
 import Chart from "../_components/dashboard/Chart";
 import prisma from "../lib/db";
 import { unstable_noStore as noStore } from "next/cache";
+import DashboardStats from "../_components/dashboard/DashboardStats";
 
 async function getData () {
   const now  = new Date();
