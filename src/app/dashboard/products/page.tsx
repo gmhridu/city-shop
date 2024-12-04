@@ -109,9 +109,11 @@ export default async function ProductsPage() {
                         <Edit2 className="size-2" />
                         <span>Edit</span></Link>
                       </DropdownMenuItem>
-                      <DropdownMenuItem className="cursor-pointer text-red-500 hover:bg-red-600 hover:text-white" asChild>
+                      <DropdownMenuItem className="cursor-pointer
+                      text-red-500 hover:bg-red-600 hover:text-white"
+                      asChild>
                         <Link href={`/dashboard/products/${item?.id}`}>
-                        <DeleteIcon className="size-3" />
+                        <DeleteIcon className="size-3 " />
                         <span>Delete</span></Link>
                       </DropdownMenuItem>
                     </DropdownMenuContent>

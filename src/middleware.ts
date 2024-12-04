@@ -7,12 +7,20 @@ export async function middleware(req: NextRequest) {
 
   const pathname = req.nextUrl.pathname;
 
-  if (user && user?.email !== 'hasanhridoymahabub9@gmail.com' && pathname === '/dashboard') {
+  // Redirect to "/" if the user does not have access to "/dashboard"
+  if (
+    pathname === "/dashboard" &&
+    (user && (user.email !== "hasanhridoymahabub9@gmail.com" && user.email !== "hasanshuvo416@gmail.com"))
+  ) {
     return NextResponse.redirect(new URL("/", req.url));
   }
 
-
-  if (user?.email === 'hasanhridoymahabub9@gmail.com' && pathname === "/") {
+  // Redirect to "/dashboard" if the user with the correct email tries to access "/"
+  if (
+    pathname === "/" &&
+    user &&
+    (user.email === "hasanhridoymahabub9@gmail.com" || user.email === "hasanshuvo416@gmail.com")
+  ) {
     return NextResponse.redirect(new URL("/dashboard", req.url));
   }
 

@@ -6,8 +6,7 @@ import prisma from '@/app/lib/db'
 import { StarIcon } from 'lucide-react';
 import { notFound } from 'next/navigation';
 import React from 'react'
-import { unstable_noStore as noStore } from "next/cache";
-
+import {unstable_noStore as noStore} from 'next/cache'
 async function getData (productId: string) {
   const data = prisma.product.findUnique({
     where: {
